@@ -410,24 +410,12 @@ function AddAppointment() {
   const [loader, setLoader] = useState(false);
 
   const [formData, setFormData] = useState({
-    location: "",
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
     phone: "",
-    treatmentService: "",
+    subject: "",
     date: "",
     time: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-    dob: "",
-    history: "",
-    diagnosed: false,
-    gdpr: false,
-    userId: ""  // optional, pass only if you want to connect to user
   });
 
   const handleChange = (e) => {
@@ -440,14 +428,12 @@ function AddAppointment() {
 
   // Basic validation for required fields
   const isValid = () =>
-    !!formData.firstName &&
-    !!formData.lastName &&
+    !!formData.name &&
     !!formData.email &&
     !!formData.phone &&
-    !!formData.treatmentService &&
+    !!formData.subject &&
     !!formData.date &&
-    !!formData.time &&
-    !!formData.gdpr; // require GDPR checked
+    !!formData.time;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -455,33 +441,21 @@ function AddAppointment() {
     try {
       // filter out fields not required by the backend if empty (userId, etc)
       let payload = { ...formData };
-      if (!payload.userId) delete payload.userId;
+      // if (!payload.userId) delete payload.userId;
 
       const response = await createAppointmentServ(payload);
       if (response?.data?.statusCode === 200) {
         toast.success(response?.data?.message || "Appointment Created!");
         setFormData({
-          location: "",
-          firstName: "",
-          lastName: "",
+          name: "",
           email: "",
           phone: "",
-          treatmentService: "",
+          subject: "",
           date: "",
           time: "",
-          address: "",
-          city: "",
-          state: "",
-          zip: "",
-          country: "",
-          dob: "",
-          history: "",
-          diagnosed: false,
-          gdpr: false,
-          userId: ""
         });
         setTimeout(() => {
-          navigate("/appointments"); // redirect if you want
+          navigate("/appointment-list"); // redirect if you want
         }, 1200);
       } else {
         toast.error(response?.data?.message || "Something went wrong");
@@ -512,38 +486,19 @@ function AddAppointment() {
               </h4>
               <form onSubmit={handleSubmit}>
                 <div className="row">
+              
                   <div className="col-6 mb-3">
-                    <label>Location</label>
+                    <label>Name *</label>
                     <input
                       className="form-control"
-                      name="location"
-                      value={formData.location}
-                      onChange={handleChange}
-                      type="text"
-                    />
-                  </div>
-                  <div className="col-6 mb-3">
-                    <label>First Name *</label>
-                    <input
-                      className="form-control"
-                      name="firstName"
-                      value={formData.firstName}
+                      name="name"
+                      value={formData.name}
                       onChange={handleChange}
                       type="text"
                       required
                     />
                   </div>
-                  <div className="col-6 mb-3">
-                    <label>Last Name *</label>
-                    <input
-                      className="form-control"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      type="text"
-                      required
-                    />
-                  </div>
+                 
                   <div className="col-6 mb-3">
                     <label>Email *</label>
                     <input
@@ -567,11 +522,11 @@ function AddAppointment() {
                     />
                   </div>
                   <div className="col-6 mb-3">
-                    <label>Treatment Service *</label>
+                    <label>Subject *</label>
                     <input
                       className="form-control"
-                      name="treatmentService"
-                      value={formData.treatmentService}
+                      name="subject"
+                      value={formData.subject}
                       onChange={handleChange}
                       type="text"
                       required
@@ -597,115 +552,7 @@ function AddAppointment() {
                       type="time"
                     />
                   </div>
-                  <div className="col-12 mb-3">
-                    <label>Address</label>
-                    <input
-                      className="form-control"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      type="text"
-                    />
-                  </div>
-                  <div className="col-4 mb-3">
-                    <label>City</label>
-                    <input
-                      className="form-control"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      type="text"
-                    />
-                  </div>
-                  <div className="col-4 mb-3">
-                    <label>State</label>
-                    <input
-                      className="form-control"
-                      name="state"
-                      value={formData.state}
-                      onChange={handleChange}
-                      type="text"
-                    />
-                  </div>
-                  <div className="col-4 mb-3">
-                    <label>Zip</label>
-                    <input
-                      className="form-control"
-                      name="zip"
-                      value={formData.zip}
-                      onChange={handleChange}
-                      type="text"
-                    />
-                  </div>
-                  <div className="col-6 mb-3">
-                    <label>Country</label>
-                    <input
-                      className="form-control"
-                      name="country"
-                      value={formData.country}
-                      onChange={handleChange}
-                      type="text"
-                    />
-                  </div>
-                  <div className="col-6 mb-3">
-                    <label>Date of Birth</label>
-                    <input
-                      className="form-control"
-                      name="dob"
-                      value={formData.dob}
-                      onChange={handleChange}
-                      type="date"
-                    />
-                  </div>
-                  <div className="col-12 mb-3">
-                    <label>Any Medical History</label>
-                    <textarea
-                      className="form-control"
-                      name="history"
-                      value={formData.history}
-                      onChange={handleChange}
-                      rows={2}
-                    />
-                  </div>
-                  <div className="col-4 mb-3 d-flex align-items-center">
-                    <input
-                      type="checkbox"
-                      name="diagnosed"
-                      checked={formData.diagnosed}
-                      onChange={handleChange}
-                      id="diagnosed"
-                      className="me-2"
-                    />
-                    <label htmlFor="diagnosed" style={{ marginBottom: "0" }}>
-                      Diagnosed?
-                    </label>
-                  </div>
-                  <div className="col-12 mb-3 d-flex align-items-center">
-                    <input
-                      type="checkbox"
-                      name="gdpr"
-                      checked={formData.gdpr}
-                      onChange={handleChange}
-                      id="gdpr"
-                      className="me-2"
-                    />
-                    <label htmlFor="gdpr" style={{ marginBottom: "0" }}>
-                      I consent to GDPR policy*
-                    </label>
-                  </div>
-                  {/* Optional: userId for linking with a registered user */}
-{/*                   
-                  <div className="col-12 mb-3">
-                    <label>User ID (optional)</label>
-                    <input
-                      className="form-control"
-                      name="userId"
-                      value={formData.userId}
-                      onChange={handleChange}
-                      type="text"
-                    />
-                  </div>
-                  */}
+                 
                   <div className="col-12">
                     <button
                       className="btn btn-primary w-100"

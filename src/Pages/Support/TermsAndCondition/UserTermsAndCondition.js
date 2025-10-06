@@ -76,7 +76,7 @@ function UserTermsAndCondition() {
   };
   return (
     <div className="bodyContainer">
-      <Sidebar selectedMenu="Policy" selectedItem="Terms & Condition" />
+      <Sidebar selectedMenu="Setting" selectedItem="Terms & Condition" />
       <div className="mainContainer">
         <TopNav />
         <div className="p-lg-4 p-md-3 p-2">

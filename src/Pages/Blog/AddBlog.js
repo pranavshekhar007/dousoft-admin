@@ -7,6 +7,7 @@ import JoditEditor from "jodit-react";
 import { getBlogListServ, addBlogServ } from "../../services/blog.service";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import { getCategoryServ } from "../../services/blogCattegory.services";
 
 function AddBlog() {
   const navigate = useNavigate();
@@ -29,6 +30,28 @@ function AddBlog() {
     tags: "",
   });
 
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const fetchCategories = async () => {
+    try {
+      const res = await getCategoryServ();
+      if (res?.data?.statusCode === 200) {
+        const formatted = res.data.data.map((cat) => ({
+          value: cat._id,
+          label: cat.name,
+        }));
+        setCategories(formatted);
+      }
+    } catch (error) {
+      console.error("Failed to load categories", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   const [shortDescription, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
 
@@ -39,6 +62,7 @@ function AddBlog() {
         ...formData,
         shortDescription: shortDescription,
         description: description,
+        blogCategoryId: selectedCategories.map(cat => cat.value)
       };
       let response = await addBlogServ(finalPayload);
       if (response?.data?.statusCode == "200") {
@@ -95,7 +119,6 @@ function AddBlog() {
                     />
                   </div>
                   <input
-                    
                     onChange={(e) =>
                       setFormData({
                         ...formData,
@@ -137,6 +160,17 @@ function AddBlog() {
                       setFormData({ ...formData, metaKeyword: e.target.value })
                     }
                     className="form-control"
+                  />
+                </div>
+
+                <div className="col-6 mb-3">
+                  <label>Category*</label>
+                  <Select
+                    isMulti
+                    options={categories}
+                    value={selectedCategories}
+                    onChange={(selected) => setSelectedCategories(selected)}
+                    placeholder="Select category(s)"
                   />
                 </div>
 

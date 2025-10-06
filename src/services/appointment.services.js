@@ -15,7 +15,7 @@ const getConfig = () => {
 // Create Appointment Service
 export const createAppointmentServ = async (formData) => {
   try {
-    const response = await axios.post(BASE_URL + "appointment/create", formData, getConfig());
+    const response = await axios.post(BASE_URL + "appointment/create", formData);
     return response;
   } catch (error) {
     console.error("Error creating appointment:", error);

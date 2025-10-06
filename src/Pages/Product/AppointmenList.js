@@ -272,7 +272,7 @@ function AppointmentList() {
                     setPayload({ ...payload, status: e.target.value })
                   }
                 >
-                  <option value="">Select Status</option>
+                  <option value="">All Status</option>
                   <option value="confirmed">Confirmed</option>
                   <option value="pending">Pending</option>
                   <option value="rejected">Rejected</option>
@@ -365,10 +365,11 @@ function AppointmentList() {
                       >
                         Sr. No
                       </th>
-                      <th className="text-center">Patient</th>
+                      <th className="text-center">Name</th>
+                      <th className="text-center">Email</th>
                       <th className="text-center">Time</th>
                       <th className="text-center" style={{ width: "200px" }}>
-                        Service
+                        Subject
                       </th>
                       <th className="text-center">Status</th>
                       <th
@@ -409,7 +410,11 @@ function AppointmentList() {
                             </td>
 
                             <td className="font-weight-600 text-center">
-                              {v?.firstName}
+                              {v?.name}
+                            </td>
+
+                            <td className="font-weight-600 text-center">
+                              {v?.email}
                             </td>
 
                             <td className="font-weight-600 text-center">
@@ -425,7 +430,7 @@ function AppointmentList() {
                                 textOverflow: "ellipsis",
                               }}
                             >
-                              {v?.treatmentService}
+                              {v?.subject}
                             </td>
 
                             <td className="text-center">

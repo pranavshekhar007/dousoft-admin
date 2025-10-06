@@ -62,6 +62,10 @@ import UpdateBlog from "../Pages/Blog/UpdateBlog";
 import ForgotPasswordPage from "../Pages/Password/ForgotPasswordPage";
 import ResetPasswordPage from "../Pages/Password/ResetPasswordPage";
 import ReviewPageList from "../Pages/Review/ReviewPageList";
+import BlogCategoriesList from "../Pages/Blog/BlogCategoryList";
+import CarrerCategoriesList from "../Pages/Carrer/CarrerCategoryList";
+import PortfolioCategoriesList from "../Pages/Porfolio/PortfolioCategory";
+import MeetingList from "../Pages/Meeting/MeetingList";
 
 function AuthenticatedRoutes() {
   return (
@@ -206,6 +210,12 @@ function AuthenticatedRoutes() {
       {/* other routes here */}
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+
+      <Route path="/add-blog-category" element={<BlogCategoriesList />} />
+      <Route path="/carrer-category" element={<CarrerCategoriesList />} />
+
+      <Route path="/portfolio-category" element={<PortfolioCategoriesList />} />
+      <Route path="/meeting" element={<MeetingList />} />
     </Routes>
   );
 }

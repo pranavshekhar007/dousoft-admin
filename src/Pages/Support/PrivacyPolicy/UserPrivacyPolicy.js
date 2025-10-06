@@ -75,7 +75,7 @@ function UserPrivacyPolicy() {
   };
   return (
     <div className="bodyContainer">
-      <Sidebar selectedMenu="Policy" selectedItem="Privacy Policy" />
+      <Sidebar selectedMenu="Setting" selectedItem="Privacy Policy" />
       <div className="mainContainer">
         <TopNav />
         <div className="p-lg-4 p-md-3 p-2">

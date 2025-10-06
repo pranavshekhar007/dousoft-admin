@@ -10,6 +10,7 @@ import {
 } from "../../services/blog.service";
 import Select from "react-select";
 import { useNavigate, useParams } from "react-router-dom";
+import { getCategoryServ } from "../../services/blogCattegory.services";
 
 function UpdateBlog() {
   const navigate = useNavigate();
@@ -31,11 +32,28 @@ function UpdateBlog() {
     metaDescription: "",
     rank: "",
     tags: "",
-    status:""
+    status: "",
   });
 
   const [shortDescription, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const getCategoriesFunc = async () => {
+    try {
+      let res = await getCategoryServ();
+      if (res?.data?.statusCode === 200) {
+        const formatted = res.data.data.map((cat) => ({
+          value: cat._id,
+          label: cat.name,
+        }));
+        setCategories(formatted);
+      }
+    } catch (error) {
+      console.error("Failed to load categories", error);
+    }
+  };
 
   const handleSubmit = async () => {
     setLoader(true);
@@ -44,6 +62,7 @@ function UpdateBlog() {
         ...formData,
         shortDescription: shortDescription,
         description: description,
+        blogCategoryId: selectedCategories.map((cat) => cat.value),
         id: params?.id,
       };
       let response = await updateBlogServ(finalPayload);
@@ -67,6 +86,7 @@ function UpdateBlog() {
     try {
       let response = await getBlogDetailsServ(params?.id);
       if (response?.data?.statusCode == "200") {
+        const blogData = response.data.data;
         setFormData({
           imgPrev: response?.data?.data?.image,
           title: response?.data?.data?.title,
@@ -75,16 +95,24 @@ function UpdateBlog() {
           metaDescription: response?.data?.data?.metaDescription,
           rank: response?.data?.data?.rank,
           tags: response?.data?.data?.tags,
-          status:response?.data?.data?.status
+          status: response?.data?.data?.status,
         });
         setShortDescription(response?.data?.data?.shortDescription);
         setDescription(response?.data?.data?.description);
+        if (blogData.blogCategoryId?.length) {
+          const preselected = blogData.blogCategoryId.map((cat) => ({
+            value: cat._id,
+            label: cat.name,
+          }));
+          setSelectedCategories(preselected);
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
+    getCategoriesFunc();
     getBlogDetailsFunc();
   }, [params?.id]);
   return (
@@ -136,6 +164,7 @@ function UpdateBlog() {
                     type="file"
                   />
                 </div>
+
                 <div className="col-6 mb-3">
                   <label>Title*</label>
                   <input
@@ -178,6 +207,18 @@ function UpdateBlog() {
                     className="form-control"
                   />
                 </div>
+
+                <div className="col-6 mb-3">
+                  <label>Category*</label>
+                  <Select
+                    isMulti
+                    options={categories}
+                    value={selectedCategories}
+                    onChange={(selected) => setSelectedCategories(selected)}
+                    placeholder="Select category(s)"
+                  />
+                </div>
+
                 <div className="col-6 mb-3">
                   <label>Rank*</label>
                   <input
@@ -192,19 +233,19 @@ function UpdateBlog() {
                 <div className="col-6 mb-3">
                   <label>Status*</label>
                   <select
-                      className="form-control"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          status: e.target.value,
-                        })
-                      }
-                      value={formData?.status}
-                    >
-                      <option value="">Select Status</option>
-                      <option value={true}>Active</option>
-                      <option value={false}>Inactive</option>
-                    </select>
+                    className="form-control"
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        status: e.target.value,
+                      })
+                    }
+                    value={formData?.status}
+                  >
+                    <option value="">Select Status</option>
+                    <option value={true}>Active</option>
+                    <option value={false}>Inactive</option>
+                  </select>
                 </div>
 
                 <div className="col-12 mb-3">

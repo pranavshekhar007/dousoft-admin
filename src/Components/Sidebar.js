@@ -49,10 +49,10 @@ function Sidebar({ selectedMenu, selectedItem }) {
     //       name: "Combo Packs",
     //       path: "/combo-product-list",
     //     },
-        // {
-        //   name: "Add Product",
-        //   path: "/add-product",
-        // },
+    // {
+    //   name: "Add Product",
+    //   path: "/add-product",
+    // },
     //     {
     //       name: "Add Combo Packs",
     //       path: "/add-combo-product",
@@ -89,16 +89,45 @@ function Sidebar({ selectedMenu, selectedItem }) {
         },
       ],
     },
-   
 
+    // {
+    //   menuIcon: "https://cdn-icons-png.flaticon.com/128/8013/8013078.png",
+    //   menu: "Review",
+    //   subMenu: [
+    //     {
+    //       name: "Reviews",
+    //       path: "/review",
+    //     },
+    //   ],
+    // },
     {
-      menuIcon: "https://cdn-icons-png.flaticon.com/128/8013/8013078.png",
-      menu: "Review",
+      menuIcon: "https://cdn-icons-png.flaticon.com/128/17109/17109429.png",
+      menu: "Carrer",
       subMenu: [
         {
-          name: "Reviews",
-          path: "/review",
-        },
+          name: "Carrer Category",
+          path: "/carrer-category",
+        }
+      ],
+    },
+    {
+      menuIcon: "https://cdn-icons-png.flaticon.com/128/11937/11937805.png",
+      menu: "Portfolio",
+      subMenu: [
+        {
+          name: "Portfolio Category",
+          path: "/portfolio-category",
+        }
+      ],
+    },
+    {
+      menuIcon: "https://cdn-icons-png.flaticon.com/128/12793/12793996.png",
+      menu: "Meeting",
+      subMenu: [
+        {
+          name: "Meeting",
+          path: "/meeting",
+        }
       ],
     },
     {
@@ -112,6 +141,10 @@ function Sidebar({ selectedMenu, selectedItem }) {
         {
           name: "Add Blogs",
           path: "/add-blog",
+        },
+        {
+          name: "Blogs Category",
+          path: "/add-blog-category",
         },
       ],
     },
@@ -134,6 +167,14 @@ function Sidebar({ selectedMenu, selectedItem }) {
         {
           name: "Contact Query",
           path: "/contact-query",
+        },
+        {
+          name: "Privacy Policy",
+          path: "/user-privacy-policy",
+        },
+        {
+          name: "Terms & Condition",
+          path: "/user-terms-condition",
         },
       ],
     },
@@ -200,10 +241,10 @@ function Sidebar({ selectedMenu, selectedItem }) {
     //       name: "FAQs",
     //       path: "/faq-user-list",
     //     },
-        // {
-        //   name: "Contact Query",
-        //   path: "/contact-query",
-        // },
+    // {
+    //   name: "Contact Query",
+    //   path: "/contact-query",
+    // },
     //   ],
     // },
     // {
@@ -255,8 +296,8 @@ function Sidebar({ selectedMenu, selectedItem }) {
         <div className="brandLogo d-flex justify-content-center align-items-center py-4 px-3">
           <img
             className="img-fluid"
-            src="/DoctorLogo.png"
-            alt="Doctor Logo"
+            src="/Dousoftlogo.png"
+            alt="Dousoft Logo"
             style={{ maxWidth: "100%", height: "auto" }}
           />
         </div>
